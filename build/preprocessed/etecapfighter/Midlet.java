@@ -6,51 +6,30 @@
 
 package etecapfighter;
 
-import javax.microedition.lcdui.*;
+import javax.microedition.lcdui.Display;
 import javax.microedition.midlet.*;
 
 /**
- * @author User
+ * @author u14287
  */
-public class Midlet extends MIDlet implements CommandListener {
-
+public class Midlet extends MIDlet {
+    
     private Display display;
-    private Command cmdExit;
-    private CoreGame cg;
+    protected Game g;
     
-    Midlet() throws Exception{
-        display = Display.getDisplay(this);
-    
-       
-        if (( cg = new CoreGame())!= null){
-            cmdExit = new Command("sair",Command.EXIT,0);
-            cg.addCommand(cmdExit);
-            cg.setCommandListener(this);
-        }
-       
-        
+    public Midlet() throws Exception {  
+       display = Display.getDisplay(this);
+       g = new Game();       
     }
-    
-    public void startApp() {
-       
-        if (cg != null){
-            display.setCurrent(cg);
-            cg.start();
-        }
-       
+
+    public void startApp() {        
+        display.setCurrent(g);
+        g.start();
     }
     
     public void pauseApp() {
     }
     
     public void destroyApp(boolean unconditional) {
-    }
-
-    public void commandAction(Command c, Displayable d) {
-         if (c==cmdExit) {
-            System.gc();  // chama o grabage collector
-            destroyApp(false);
-            notifyDestroyed();
-        }
     }
 }
